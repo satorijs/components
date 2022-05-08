@@ -1,9 +1,8 @@
 {
-  "name": "shigure",
+  "name": "semisigure",
   "description": "Universal Chat UI Component",
-  "version": "0.1.0",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "version": "0.1.1",
+  "main": "src/index.ts",
   "files": [
     "src"
   ],
@@ -11,12 +10,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/satorijs/shigure.git"
+    "url": "git+https://github.com/satorijs/semisigure.git"
   },
   "bugs": {
-    "url": "https://github.com/satorijs/shigure/issues"
+    "url": "https://github.com/satorijs/semisigure/issues"
   },
-  "homepage": "https://github.com/satorijs/shigure",
+  "homepage": "https://github.com/satorijs/semisigure",
   "keywords": [
     "chat",
     "message",
