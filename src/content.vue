@@ -1,5 +1,5 @@
 <template>
-  <div class="k-message-content">
+  <div class="s-message-content">
     <template v-for="({ type, data }) in segment.parse(content)">
       <span v-if="type === 'text'">{{ data.content }}</span>
       <span v-else-if="type === 'at'">@{{ data.name }}</span>
@@ -41,7 +41,7 @@ const segmentTypes = {
 
 <style lang="scss" scoped>
 
-.k-message-content {
+.s-message-content {
   white-space: break-spaces;
   line-height: 1.5;
   position: relative;

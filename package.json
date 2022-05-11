@@ -22,5 +22,9 @@
     "messenger",
     "ui",
     "component"
-  ]
+  ],
+  "peerDependencies": {
+    "element-plus": "^2.1.11",
+    "vue": "^3.2.33"
+  }
 }

@@ -1,22 +1,24 @@
 <template>
-  <component :is="tag || 'div'" class="k-chat-panel">
+  <component :is="tag || 'div'" class="s-chat-panel">
     <virtual-list
-      class="k-chat-body" :item-class="resolveItemClass"
+      class="s-chat-body" :item-class="resolveItemClass"
       key-name="messageId" :data="messages" :pinned="pinned"
       @click="(message) => $emit('click', message)"
       :active-key="activeKey" @update:active-key="$emit('update:activeKey', $event)">
       <template #default="props"><slot v-bind="props"/></template>
     </virtual-list>
-    <div class="k-chat-footer">
-      <input
-        autocomplete="off"
-        step="any"
-        :value="text"
-        @input="text = $event.target['value']"
-        @paste="onPaste"
-        @keydown.enter.stop="onEnter"
-      />
-    </div>
+    <footer>
+      <div class="textarea">
+        <input
+          autocomplete="off"
+          step="any"
+          :value="text"
+          @input="text = $event.target['value']"
+          @paste="onPaste"
+          @keydown.enter.stop="onEnter"
+        />
+      </div>
+    </footer>
   </component>
 </template>
 
@@ -39,7 +41,7 @@ const props = defineProps<{
 const text = ref('')
 
 function resolveItemClass(item: any, index: number) {
-  return 'k-chat-message ' + (props.itemClass?.(item, index) ?? '')
+  return 'chat-message ' + (props.itemClass?.(item, index) ?? '')
 }
 
 function onEnter() {
@@ -63,15 +65,16 @@ async function onPaste(event: ClipboardEvent) {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 $padding: 1.5rem;
 
-.k-chat-panel {
+.s-chat-panel {
   display: flex;
   flex-direction: column;
+  height: 100%;
 
-  .k-chat-footer {
+  footer {
     padding: 1rem 1.5rem;
     border-top: 1px solid var(--border);
 
@@ -84,14 +87,13 @@ $padding: 1.5rem;
       height: inherit;
       color: inherit;
       display: inline-block;
-      border-radius: 0.3em;
       transition: 0.3s ease;
       box-sizing: border-box;
       background-color: transparent;
     }
   }
 
-  .k-chat-message {
+  .chat-message {
     position: relative;
   }
 }

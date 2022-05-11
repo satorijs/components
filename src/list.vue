@@ -1,19 +1,19 @@
 <template>
   <el-scrollbar ref="root" @scroll="onScroll">
     <virtual-item v-if="$slots.header" @resize="virtual.saveSize" uid="header">
-      <slot name="header"/>
+      <slot name="header"></slot>
     </virtual-item>
-    <div class="k-virtual-list-wrapper" :style="wrapperStyle">
+    <div class="s-virtual-list-wrapper" :style="wrapperStyle">
       <virtual-item v-for="(item, index) in dataShown"
         :tag="itemTag" :class="resolveItemClass(item, index)" :uid="item[keyName]"
         @click.stop="emit('click', item, $event)" @resize="virtual.saveSize">
-        <slot v-bind="item" :index="index + range.start"/>
+        <slot v-bind="item" :index="index + range.start"></slot>
       </virtual-item>
     </div>
     <virtual-item v-if="$slots.footer" @resize="virtual.saveSize" uid="footer">
-      <slot name="footer"/>
+      <slot name="footer"></slot>
     </virtual-item>
-    <div ref="shepherd"/>
+    <div ref="shepherd"></div>
   </el-scrollbar>
 </template>
 
