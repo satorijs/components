@@ -1,9 +1,9 @@
 <template>
-  <component :is="tag || 'div'" class="s-chat-panel">
+  <component :is="tag || 'div'" class="chat-panel">
     <virtual-list
-      class="s-chat-body" :item-class="resolveItemClass"
+      class="chat-body" :item-class="resolveItemClass"
       key-name="messageId" :data="messages" :pinned="pinned"
-      @click="(message) => $emit('click', message)"
+      @item-click="(message) => $emit('click', message)"
       :active-key="activeKey" @update:active-key="$emit('update:activeKey', $event)">
       <template #default="props"><slot v-bind="props"/></template>
     </virtual-list>
@@ -69,7 +69,7 @@ async function onPaste(event: ClipboardEvent) {
 
 $padding: 1.5rem;
 
-.s-chat-panel {
+.chat-panel {
   display: flex;
   flex-direction: column;
   height: 100%;

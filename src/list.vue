@@ -3,13 +3,13 @@
     <virtual-item v-if="$slots.header" @resize="virtual.saveSize" uid="header">
       <slot name="header"></slot>
     </virtual-item>
-    <div class="s-virtual-list-wrapper" :style="wrapperStyle">
-      <virtual-item v-for="(item, index) in dataShown"
+    <component :is="wrapperTag" class="virtual-list-wrapper" :style="wrapperStyle">
+      <virtual-item v-for="(item, index) in dataShown" class="virtual-list-item"
         :tag="itemTag" :class="resolveItemClass(item, index)" :uid="item[keyName]"
-        @click.stop="emit('click', item, $event)" @resize="virtual.saveSize">
+        @click.stop="emit('item-click', item, $event)" @resize="virtual.saveSize">
         <slot v-bind="item" :index="index + range.start"></slot>
       </virtual-item>
-    </div>
+    </component>
     <virtual-item v-if="$slots.footer" @resize="virtual.saveSize" uid="footer">
       <slot name="footer"></slot>
     </virtual-item>
@@ -23,13 +23,14 @@ import { ref, computed, watch, nextTick, onActivated, onMounted, onUpdated, onBe
 import { ElScrollbar } from 'element-plus'
 import Virtual from './virtual'
 
-const emit = defineEmits(['click', 'scroll', 'top', 'bottom', 'update:activeKey'])
+const emit = defineEmits(['item-click', 'scroll', 'top', 'bottom', 'update:activeKey'])
 
 const props = defineProps({
-  keyName: { type: String, required: true },
+  keyName: { type: String, default: 'id' },
   data: { type: Array, required: true },
   count: { default: 50 },
   estimated: { default: 50 },
+  wrapperTag: { default: 'div' },
   itemTag: { default: 'div' },
   itemClass: {},
   pinned: Boolean,
