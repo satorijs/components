@@ -30,7 +30,8 @@ defineProps<{
   line-height: 1.5;
   position: relative;
 
-  img {
+  :deep(img) {
+    cursor: pointer;
     max-height: 320px;
     max-width: 100%;
   }

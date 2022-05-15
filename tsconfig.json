@@ -9,11 +9,8 @@
     "moduleResolution": "node",
     "strictBindCallApply": true,
     "jsx": "preserve",
-    "types": [
-      "../global",
-    ],
   },
   "include": [
-    ".",
+    "src",
   ],
 }

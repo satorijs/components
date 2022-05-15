@@ -1,17 +1,16 @@
 <template>
   <el-scrollbar ref="root" @scroll="onScroll">
-    <virtual-item v-if="$slots.header" @resize="virtual.saveSize" uid="header">
-      <slot name="header"></slot>
+    <virtual-item v-if="$slots.header" @resize="virtual.saveSize('header', $event)">
+      <div><slot name="header"></slot></div>
     </virtual-item>
-    <component :is="wrapperTag" class="virtual-list-wrapper" :style="wrapperStyle">
-      <virtual-item v-for="(item, index) in dataShown" class="virtual-list-item"
-        :tag="itemTag" :class="resolveItemClass(item, index)" :uid="item[keyName]"
-        @click.stop="emit('item-click', item, $event)" @resize="virtual.saveSize">
+    <component :is="tag" class="virtual-list-wrapper" :style="wrapperStyle">
+      <virtual-item v-for="(item, index) in dataShown"
+        @resize="virtual.saveSize(item[keyName], $event)">
         <slot v-bind="item" :index="index + range.start"></slot>
       </virtual-item>
     </component>
-    <virtual-item v-if="$slots.footer" @resize="virtual.saveSize" uid="footer">
-      <slot name="footer"></slot>
+    <virtual-item v-if="$slots.footer" @resize="virtual.saveSize('footer', $event)">
+      <div><slot name="footer"></slot></div>
     </virtual-item>
     <div ref="shepherd"></div>
   </el-scrollbar>
@@ -19,9 +18,10 @@
 
 <script lang="ts" setup>
 
-import { ref, computed, watch, nextTick, onActivated, onMounted, onUpdated, onBeforeUnmount, defineComponent, h } from 'vue'
+import { ref, computed, watch, nextTick, onActivated, onMounted } from 'vue'
 import { ElScrollbar } from 'element-plus'
 import Virtual from './virtual'
+import VirtualItem from './item'
 
 const emit = defineEmits(['item-click', 'scroll', 'top', 'bottom', 'update:activeKey'])
 
@@ -30,21 +30,13 @@ const props = defineProps({
   data: { type: Array, required: true },
   count: { default: 50 },
   estimated: { default: 50 },
-  wrapperTag: { default: 'div' },
-  itemTag: { default: 'div' },
-  itemClass: {},
+  tag: { default: 'div' },
   pinned: Boolean,
   activeKey: { default: '' },
   threshold: { default: 0 },
 })
 
 const dataShown = computed<any[]>(() => props.data.slice(range.start, range.end))
-
-function resolveItemClass(item: any, index: number) {
-  return typeof props.itemClass === 'function'
-    ? props.itemClass(item, index + range.start)
-    : props.itemClass
-}
 
 const root = ref<typeof ElScrollbar>()
 
@@ -152,37 +144,5 @@ function emitEvent(offset: number, clientLength: number, scrollLength: number, e
     emit('bottom')
   }
 }
-
-const VirtualItem = defineComponent({
-  props: {
-    tag: String,
-    uid: String,
-  },
-
-  emits: ['resize'],
-
-  setup(props, { slots, emit }) {
-    let resizeObserver: ResizeObserver
-    const root = ref<HTMLElement>()
-
-    onMounted(() => {
-      resizeObserver = new ResizeObserver(dispatchSizeChange)
-      resizeObserver.observe(root.value)
-    })
-
-    onUpdated(dispatchSizeChange)
-
-    onBeforeUnmount(() => {
-      resizeObserver.disconnect()
-    })
-
-    function dispatchSizeChange() {
-      const marginTop = +(getComputedStyle(root.value).marginTop.slice(0, -2))
-      emit('resize', props.uid, root.value.offsetHeight + marginTop)
-    }
-
-    return () => h(props.tag, { ref: root }, slots.default())
-  },
-})
 
 </script>

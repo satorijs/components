@@ -1,7 +1,7 @@
 {
-  "name": "semisigure",
-  "description": "Universal Chat UI Component",
-  "version": "0.2.1",
+  "name": "@satorijs/components",
+  "description": "UI Components for Satori",
+  "version": "0.3.0",
   "main": "src/index.ts",
   "files": [
     "src"
