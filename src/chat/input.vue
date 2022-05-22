@@ -35,9 +35,17 @@ async function onPaste(event: ClipboardEvent) {
   if (item.kind === 'file') {
     event.preventDefault()
     const file = item.getAsFile()
+    const [type] = file.type.split('/', 1)
+    if (!['image', 'audio', 'video'].includes(type)) {
+      console.warn('Unsupported file type:', file.type)
+      return
+    }
+
     const reader  = new FileReader()
     reader.addEventListener('load', function () {
-      emit('send', segment.image('base64://' + reader.result.slice(22)))
+      emit('send', segment(type, {
+        url: 'base64://' + reader.result.slice(22),
+      }))
     }, false)
     reader.readAsDataURL(file)
   }

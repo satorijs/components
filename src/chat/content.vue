@@ -8,6 +8,12 @@
       <slot v-else-if="type === 'image'" name="image" v-bind="data">
         <img :src="data.url">
       </slot>
+      <slot v-else-if="type === 'audio'" name="audio" v-bind="data">
+        <audio :src="data.url" controls></audio>
+      </slot>
+      <slot v-else-if="type === 'video'" name="video" v-bind="data">
+        <video :src="data.url" controls></video>
+      </slot>
       <slot v-else v-bind="data"></slot>
     </template>
   </div>
@@ -30,7 +36,7 @@ defineProps<{
   line-height: 1.5;
   position: relative;
 
-  :deep(img) {
+  :deep(img), :deep(audio), :deep(video) {
     cursor: pointer;
     max-height: 320px;
     max-width: 100%;
