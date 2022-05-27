@@ -14,6 +14,7 @@
 <script lang="ts" setup>
 
 import { ref } from 'vue'
+import { useEventListener } from '@vueuse/core'
 import segment from '@koishijs/segment'
 
 const emit = defineEmits(['send'])
@@ -30,8 +31,8 @@ function onInput(event: Event) {
   text.value = (event.target as HTMLInputElement).value
 }
 
-async function onPaste(event: ClipboardEvent) {
-  const item = event.clipboardData.items[0]
+function handleDataTransfer(event: Event, transfer: DataTransfer) {
+  const item = transfer.items[0]
   if (item.kind === 'file') {
     event.preventDefault()
     const file = item.getAsFile()
@@ -49,6 +50,14 @@ async function onPaste(event: ClipboardEvent) {
     }, false)
     reader.readAsDataURL(file)
   }
+}
+
+useEventListener('drop', (event: DragEvent) => {
+  handleDataTransfer(event, event.dataTransfer)
+})
+
+async function onPaste(event: ClipboardEvent) {
+  handleDataTransfer(event, event.clipboardData)
 }
 
 </script>

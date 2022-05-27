@@ -24,8 +24,9 @@
     "component"
   ],
   "peerDependencies": {
-    "element-plus": "^2.1.11",
-    "vue": "^3.2.33"
+    "@vueuse/core": "^7.7.1",
+    "element-plus": "^2.2.2",
+    "vue": "^3.2.36"
   },
   "dependencies": {
     "@koishijs/segment": "^1.1.1"

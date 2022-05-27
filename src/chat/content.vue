@@ -37,7 +37,7 @@ defineProps<{
   position: relative;
 
   :deep(img), :deep(audio), :deep(video) {
-    cursor: pointer;
+    display: block;
     max-height: 320px;
     max-width: 100%;
   }
