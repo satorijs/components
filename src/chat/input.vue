@@ -19,6 +19,12 @@ import segment from '@koishijs/segment'
 
 const emit = defineEmits(['send'])
 
+const props = withDefaults(defineProps<{
+  target?: HTMLElement | Document
+}>(), {
+  target: () => document,
+})
+
 const text = ref('')
 
 function onEnter() {
@@ -32,8 +38,8 @@ function onInput(event: Event) {
 }
 
 function handleDataTransfer(event: Event, transfer: DataTransfer) {
-  const item = transfer.items[0]
-  if (item.kind === 'file') {
+  for (const item of transfer.items) {
+    if (item.kind !== 'file') continue
     event.preventDefault()
     const file = item.getAsFile()
     const [type] = file.type.split('/', 1)
@@ -52,8 +58,12 @@ function handleDataTransfer(event: Event, transfer: DataTransfer) {
   }
 }
 
-useEventListener('drop', (event: DragEvent) => {
+useEventListener(props.target, 'drop', (event: DragEvent) => {
   handleDataTransfer(event, event.dataTransfer)
+})
+
+useEventListener(props.target, 'dragover', (event: DragEvent) => {
+  event.preventDefault()
 })
 
 async function onPaste(event: ClipboardEvent) {
