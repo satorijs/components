@@ -1,27 +1,27 @@
 <template>
   <div class="message-content">
-    <template v-for="({ type, data }) in segment.parse(content)">
-      <span v-if="type === 'text'">{{ data.content }}</span>
-      <slot v-else-if="type === 'at'" name="at" v-bind="data">
-        <span>@{{ data.name }}</span>
+    <template v-for="({ type, attrs }) in segment.parse(content)">
+      <span v-if="type === 'text'">{{ attrs.content }}</span>
+      <slot v-else-if="type === 'at'" name="at" v-bind="attrs">
+        <span>@{{ attrs.name }}</span>
       </slot>
-      <slot v-else-if="type === 'image'" name="image" v-bind="data">
-        <img :src="data.url">
+      <slot v-else-if="type === 'image'" name="image" v-bind="attrs">
+        <img :src="attrs.url">
       </slot>
-      <slot v-else-if="type === 'audio'" name="audio" v-bind="data">
-        <audio :src="data.url" controls></audio>
+      <slot v-else-if="type === 'audio'" name="audio" v-bind="attrs">
+        <audio :src="attrs.url" controls></audio>
       </slot>
-      <slot v-else-if="type === 'video'" name="video" v-bind="data">
-        <video :src="data.url" controls></video>
+      <slot v-else-if="type === 'video'" name="video" v-bind="attrs">
+        <video :src="attrs.url" controls></video>
       </slot>
-      <slot v-else v-bind="data"></slot>
+      <slot v-else v-bind="attrs"></slot>
     </template>
   </div>
 </template>
 
 <script lang="ts" setup>
 
-import segment from '@koishijs/segment'
+import segment from '@satorijs/element'
 
 defineProps<{
   content: string

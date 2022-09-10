@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 
 import { ref, computed, watch, nextTick, onActivated, onMounted } from 'vue'
-import { ElScrollbar } from 'element-plus'
+import type { ElScrollbar } from 'element-plus'
 import Virtual from './virtual'
 import VirtualItem from './item'
 

@@ -15,7 +15,7 @@
 
 import { ref } from 'vue'
 import { useEventListener } from '@vueuse/core'
-import segment from '@koishijs/segment'
+import segment from '@satorijs/element'
 
 const emit = defineEmits(['send'])
 
@@ -52,7 +52,7 @@ function handleDataTransfer(event: Event, transfer: DataTransfer) {
     reader.addEventListener('load', function () {
       emit('send', segment(type, {
         url: 'base64://' + reader.result.slice(22),
-      }))
+      }).toString())
     }, false)
     reader.readAsDataURL(file)
   }

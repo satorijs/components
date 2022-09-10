@@ -1,7 +1,7 @@
 {
   "name": "@satorijs/components",
   "description": "UI Components for Satori",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "main": "src/index.ts",
   "files": [
     "src"
@@ -24,11 +24,16 @@
     "component"
   ],
   "peerDependencies": {
-    "@vueuse/core": "^7.7.1",
-    "element-plus": "^2.2.2",
-    "vue": "^3.2.36"
+    "@vueuse/core": "^8.9.4",
+    "element-plus": "^2",
+    "vue": "^3"
+  },
+  "devDependencies": {
+    "@vueuse/core": "^8.9.4",
+    "element-plus": "2.2.11",
+    "vue": "^3.2.38"
   },
   "dependencies": {
-    "@koishijs/segment": "^1.1.1"
+    "@satorijs/element": "^1.0.0"
   }
 }
