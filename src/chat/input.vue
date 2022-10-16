@@ -50,9 +50,7 @@ function handleDataTransfer(event: Event, transfer: DataTransfer) {
 
     const reader  = new FileReader()
     reader.addEventListener('load', function () {
-      emit('send', segment(type, {
-        url: 'base64://' + reader.result.slice(22),
-      }).toString())
+      emit('send', segment(type, { url: reader.result }).toString())
     }, false)
     reader.readAsDataURL(file)
   }
