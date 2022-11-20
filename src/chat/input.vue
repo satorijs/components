@@ -29,7 +29,7 @@ const text = ref('')
 
 function onEnter() {
   if (!text.value) return
-  emit('send', text.value)
+  emit('send', segment.escape(text.value))
   text.value = ''
 }
 
@@ -48,7 +48,7 @@ function handleDataTransfer(event: Event, transfer: DataTransfer) {
       return
     }
 
-    const reader  = new FileReader()
+    const reader = new FileReader()
     reader.addEventListener('load', function () {
       emit('send', segment(type, { url: reader.result }).toString())
     }, false)
