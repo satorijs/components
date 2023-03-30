@@ -13,19 +13,24 @@
 
 <script lang="ts" setup>
 
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import segment from '@satorijs/element'
 
-const emit = defineEmits(['send'])
+const emit = defineEmits(['send', 'update:modelValue'])
 
 const props = withDefaults(defineProps<{
   target?: HTMLElement | Document
+  modelValue?: string
 }>(), {
   target: () => document,
+  modelValue: '',
 })
 
-const text = ref('')
+const text = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value),
+})
 
 function onEnter() {
   if (!text.value) return
