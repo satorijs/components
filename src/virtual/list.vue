@@ -41,7 +41,7 @@ const dataShown = computed<any[]>(() => props.data.slice(range.start, range.end)
 const root = ref<typeof ElScrollbar>()
 
 watch(() => props.data.length, () => {
-  const { scrollTop, clientHeight, scrollHeight } = root.value.wrap$
+  const { scrollTop, clientHeight, scrollHeight } = root.value.wrapRef
   if (!props.pinned || Math.abs(scrollTop + clientHeight - scrollHeight) < 1) {
     nextTick(scrollToBottom)
   }
@@ -86,9 +86,9 @@ onMounted(() => {
 
 function scrollToOffset(offset: number, smooth = false) {
   if (smooth) {
-    root.value.wrap$.scrollTo({ top: offset, behavior: 'smooth' })
+    root.value.wrapRef.scrollTo({ top: offset, behavior: 'smooth' })
   } else {
-    root.value.wrap$.scrollTop = offset
+    root.value.wrapRef.scrollTop = offset
   }
 }
 
@@ -106,9 +106,9 @@ function scrollToBottom() {
     // maybe list doesn't render and calculate to last range
     // so we need retry in next event loop until it really at bottom
     setTimeout(() => {
-      const offset = Math.ceil(root.value.wrap$.scrollTop)
-      const clientLength = Math.ceil(root.value.wrap$.clientHeight)
-      const scrollLength = Math.ceil(root.value.wrap$.scrollHeight)
+      const offset = Math.ceil(root.value.wrapRef.scrollTop)
+      const clientLength = Math.ceil(root.value.wrapRef.clientHeight)
+      const scrollLength = Math.ceil(root.value.wrapRef.scrollHeight)
       if (offset + clientLength < scrollLength) {
         scrollToBottom()
       }
@@ -123,9 +123,9 @@ onActivated(() => {
 })
 
 function onScroll(ev: MouseEvent) {
-  const offset = Math.ceil(scrollTop = root.value.wrap$.scrollTop)
-  const clientLength = Math.ceil(root.value.wrap$.clientHeight)
-  const scrollLength = Math.ceil(root.value.wrap$.scrollHeight)
+  const offset = Math.ceil(scrollTop = root.value.wrapRef.scrollTop)
+  const clientLength = Math.ceil(root.value.wrapRef.clientHeight)
+  const scrollLength = Math.ceil(root.value.wrapRef.scrollHeight)
 
   // iOS scroll-spring-back behavior will make direction mistake
   if (offset < 0 || (offset + clientLength > scrollLength + 1) || !scrollLength) {

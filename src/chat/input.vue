@@ -4,6 +4,7 @@
       autocomplete="off"
       step="any"
       :value="text"
+      :placeholder="placeholder"
       @input="onInput"
       @paste="onPaste"
       @keydown.enter.stop="onEnter"
@@ -22,6 +23,7 @@ const emit = defineEmits(['send', 'update:modelValue'])
 const props = withDefaults(defineProps<{
   target?: HTMLElement | Document
   modelValue?: string
+  placeholder?: string
 }>(), {
   target: () => document,
   modelValue: '',
