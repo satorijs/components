@@ -44,11 +44,13 @@ function onInput(event: Event) {
   text.value = (event.target as HTMLInputElement).value
 }
 
-function handleDataTransfer(event: Event, transfer: DataTransfer) {
+function handleDataTransfer(event: Event, transfer: DataTransfer | null) {
+  if (!transfer) return
   for (const item of transfer.items) {
     if (item.kind !== 'file') continue
-    event.preventDefault()
     const file = item.getAsFile()
+    if (!file) continue
+    event.preventDefault()
     const [type] = file.type.split('/', 1)
     if (!['image', 'audio', 'video'].includes(type)) {
       console.warn('Unsupported file type:', file.type)
