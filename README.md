@@ -1,3 +1,3 @@
-# @satorijs/components
+# @satorijs/components-*
 
 Components for Satori.js.

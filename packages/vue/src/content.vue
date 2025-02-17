@@ -23,7 +23,6 @@ export default {
 
 .message-content {
   white-space: break-spaces;
-  line-height: 1.5;
   position: relative;
 
   :deep(img), :deep(audio), :deep(video) {
